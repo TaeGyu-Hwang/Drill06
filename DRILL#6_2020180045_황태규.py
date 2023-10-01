@@ -13,6 +13,8 @@ direction = 0  # 0: left, 1: right
 move_speed = 20
 target_queue = deque()  # 마우스 클릭 위치를 저장할 큐
 
+def move_towards_target(x, y):
+
 def handle_events():
     global running
     global x, y
@@ -34,9 +36,16 @@ frame = 0
 hide_cursor()
 
 while running:
+    x, y = move_towards_target(x, y)
+    
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
+    for target in target_queue:  # 모든 타겟에 대해 hand_arrow를 그림
+        hand_arrow.draw(*target)
+    if direction == 1:
+        character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
+    else:
+        character.clip_draw(frame * 100, 100 * 0, 100, 100, x, y)
     update_canvas()
     frame = (frame + 1) % 8
 
