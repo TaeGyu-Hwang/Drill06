@@ -14,6 +14,31 @@ move_speed = 20
 target_queue = deque()  # 마우스 클릭 위치를 저장할 큐
 
 def move_towards_target(x, y):
+    global direction
+    if not target_queue:  # 타겟이 없으면 이동하지 않음
+        return x, y
+
+    target_x, target_y = target_queue[0]  # 큐의 첫 번째 타겟으로 이동
+    dx, dy = 0, 0
+    distance_x = target_x - x
+    distance_y = target_y - y
+    theta = math.atan2(distance_y, distance_x)
+    dx = move_speed * math.cos(theta)
+    dy = move_speed * math.sin(theta)
+
+    if dx > 0:
+        direction = 1
+    else:
+        direction = 0
+
+    if math.sqrt((x + dx - target_x) ** 2 + (y + dy - target_y) ** 2) < move_speed:
+        x, y = target_x, target_y
+        target_queue.popleft()  # 타겟 도착시 큐에서 제거
+    else:
+        x += dx
+        y += dy
+
+    return x, y
 
 def handle_events():
     global running
