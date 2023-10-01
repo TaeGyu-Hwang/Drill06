@@ -1,4 +1,6 @@
 from pico2d import *
+from collections import deque
+import math
 
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
