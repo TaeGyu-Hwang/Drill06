@@ -42,28 +42,23 @@ def move_towards_target(x, y):
 
 def handle_events():
     global running
-    global x, y
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             running = False
-        elif event.type == SDL_MOUSEMOTION:
+        elif event.type == SDL_MOUSEBUTTONDOWN:  # 마우스 클릭 이벤트 감지
             target_x, target_y = event.x, TUK_HEIGHT - 1 - event.y
             target_queue.append((target_x, target_y))
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
-    pass
-
-
 
 running = True
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
-#hide_cursor()
 
 while running:
     x, y = move_towards_target(x, y)
-    
+
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     for target in target_queue:  # 모든 타겟에 대해 hand_arrow를 그림
@@ -72,13 +67,10 @@ while running:
         character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
     else:
         character.clip_draw(frame * 100, 100 * 0, 100, 100, x, y)
+
     update_canvas()
     frame = (frame + 1) % 8
-
     handle_events()
+    delay(0.05)
 
 close_canvas()
-
-
-
-
