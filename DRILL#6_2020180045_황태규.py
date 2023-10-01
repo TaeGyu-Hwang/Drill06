@@ -23,7 +23,8 @@ def handle_events():
         if event.type == SDL_QUIT:
             running = False
         elif event.type == SDL_MOUSEMOTION:
-            x, y = event.x, TUK_HEIGHT - 1 - event.y
+            target_x, target_y = event.x, TUK_HEIGHT - 1 - event.y
+            target_queue.append((target_x, target_y))
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
     pass
@@ -33,7 +34,7 @@ def handle_events():
 running = True
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
-hide_cursor()
+#hide_cursor()
 
 while running:
     x, y = move_towards_target(x, y)
