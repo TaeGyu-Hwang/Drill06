@@ -55,6 +55,7 @@ def handle_events():
 running = True
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
+#hide_cursor()
 
 while running:
     x, y = move_towards_target(x, y)
